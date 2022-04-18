@@ -30,7 +30,7 @@ const CoinListItem: React.FC<StoreItemProps> = ({ data, onPress }) => {
                     </View>
                     <View style={styles.subLine}>
                         <Text style={styles.mainText}>High: {`${high_24h} €`}</Text>
-                        <Text style={[styles.mainText, { paddingLeft: 10 }]}>
+                        <Text style={[styles.mainText, styles.paddingLeft]}>
                             Low: {`${low_24h} €`}
                         </Text>
                     </View>
@@ -98,6 +98,9 @@ const styles = StyleSheet.create({
     priceContainer: {
         justifyContent: 'flex-end',
         alignItems: 'flex-end',
+    },
+    paddingLeft: {
+        paddingLeft: 10,
     },
 });
 
