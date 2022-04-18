@@ -6,7 +6,7 @@ import { Routes, NavigatorParams } from '../../navigation';
 import MainScreen from './MainScreen';
 
 jest.mock('../../components/CoinListItem', () => 'CoinListItem');
-jest.mock('../../api/fetchCoins', () => () => {});
+jest.mock('../../api/fetchCoins', () => () => [{ item: 1 }]);
 
 describe('Main Screen', () => {
     it('renders correctly', async () => {

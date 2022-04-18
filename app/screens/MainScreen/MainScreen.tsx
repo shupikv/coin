@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { SafeAreaView, FlatList, StyleSheet, Alert } from 'react-native';
+import { SafeAreaView, FlatList, StyleSheet, Alert, ActivityIndicator } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { Coins } from '../../models';
 import { Routes, NavigatorParams } from '../../navigation';
@@ -9,15 +9,18 @@ import FullScreenLoading from '../../components/FullScreenLoading';
 
 type MainScreenProps = StackScreenProps<NavigatorParams, Routes.MAIN>;
 
+let stopFetchMore = true;
+
 const MainScreen: React.FC<MainScreenProps> = ({ navigation }) => {
     const [coinItems, setCoinItems] = useState<Coins>([]);
     const [isFetching, setIsFetching] = useState(true);
+    const [currentPage, setCurrentPage] = useState(1);
 
-    const getCoins = useCallback(async () => {
+    const getCoins = useCallback(async (page?: number) => {
         try {
             setIsFetching(true);
-            const data = await fetchCoins();
-            setCoinItems(data);
+            const data = await fetchCoins(page);
+            setCoinItems((currentData) => [...currentData, ...data]);
             setIsFetching(false);
         } catch (error) {
             console.log(error);
@@ -27,11 +30,20 @@ const MainScreen: React.FC<MainScreenProps> = ({ navigation }) => {
         }
     }, []);
 
-    useEffect(() => {
-        getCoins();
-    }, [getCoins]);
+    const handleOnEndReached = () => {
+        // prevent loading next page on the first render
+        if (stopFetchMore) {
+            return;
+        }
+        setCurrentPage((previousPage) => (previousPage += 1));
+    };
 
-    if (isFetching) {
+    useEffect(() => {
+        console.log('getCoins', currentPage);
+        getCoins(currentPage);
+    }, [getCoins, currentPage]);
+
+    if (isFetching && coinItems.length === 0) {
         return <FullScreenLoading />;
     }
 
@@ -55,6 +67,12 @@ const MainScreen: React.FC<MainScreenProps> = ({ navigation }) => {
                 keyExtractor={(item) => item.id}
                 numColumns={1}
                 horizontal={false}
+                onEndReached={handleOnEndReached}
+                onEndReachedThreshold={0.5}
+                onScrollBeginDrag={() => {
+                    stopFetchMore = false;
+                }}
+                ListFooterComponent={() => <ActivityIndicator style={styles.loading} />}
             />
         </SafeAreaView>
     );
@@ -67,6 +85,9 @@ const styles = StyleSheet.create({
     },
     coinItemsList: {
         margin: 5,
+    },
+    loading: {
+        marginVertical: 10,
     },
 });
 
