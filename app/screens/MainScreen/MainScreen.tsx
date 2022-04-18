@@ -21,7 +21,7 @@ const MainScreen: React.FC = () => {
 
     useEffect(() => {
         getCoins();
-    }, []);
+    }, [getCoins]);
 
     return (
         <SafeAreaView style={styles.coinItemsContainer} testID="MainScreen">
@@ -47,5 +47,11 @@ const styles = StyleSheet.create({
         margin: 5,
     },
 });
+
+export type MainRouteParams = undefined;
+
+export const MainScreenOptions = {
+    title: 'Coins',
+};
 
 export default MainScreen;

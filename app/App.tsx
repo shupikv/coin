@@ -1,12 +1,12 @@
 import React from 'react';
-import { View } from 'react-native';
-import MainScreen from './screens/MainScreen';
+import { NavigationContainer } from '@react-navigation/native';
+import RootNavigator from './navigation/RootNavigator';
 
 const App = () => {
     return (
-        <View style={{ flex: 1 }} testID="AppRoot">
-            <MainScreen />
-        </View>
+        <NavigationContainer>
+            <RootNavigator testID="AppRoot" />
+        </NavigationContainer>
     );
 };
 

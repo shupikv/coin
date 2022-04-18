@@ -5,4 +5,5 @@ export default {
     cardBackground: 'rgba(0,0,0,0.1)',
     imagePlaceholder: 'rgba(0,0,0,0.1)',
     ripple: 'rgba(0,0,0,0.1)',
+    background: '#fff',
 };

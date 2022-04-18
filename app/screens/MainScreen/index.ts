@@ -1,1 +1,2 @@
-export { default, default as MainScreen } from './MainScreen';
+export { default, default as MainScreen, MainScreenOptions } from './MainScreen';
+export type { MainRouteParams } from './MainScreen';
