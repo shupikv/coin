@@ -25,13 +25,17 @@ const CoinListItem: React.FC<StoreItemProps> = ({ data, onPress }) => {
                             <Text style={[styles.mainText, styles.subTitle]}>{name}</Text>
                         </View>
                         <View style={styles.priceContainer}>
-                            <Text style={styles.titleText}>{`${current_price} €`}</Text>
+                            <Text style={styles.titleText}>
+                                {`${current_price.toLocaleString()} €`}
+                            </Text>
                         </View>
                     </View>
                     <View style={styles.subLine}>
-                        <Text style={styles.mainText}>High: {`${high_24h} €`}</Text>
+                        <Text style={styles.mainText}>
+                            High: {`${high_24h.toLocaleString()} €`}
+                        </Text>
                         <Text style={[styles.mainText, styles.paddingLeft]}>
-                            Low: {`${low_24h} €`}
+                            Low: {`${low_24h.toLocaleString()} €`}
                         </Text>
                     </View>
                 </View>
