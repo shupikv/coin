@@ -7,6 +7,7 @@ import {
 } from '@react-navigation/stack';
 import Routes from './Routes';
 import MainScreen, { MainScreenOptions } from '../screens/MainScreen';
+import DetailsScreen from '../screens/DetailsScreen';
 import Colors from '../constants/Colors';
 
 const Stack = createStackNavigator();
@@ -29,6 +30,7 @@ interface RootNavigatorProps extends PropsWithChildren<ViewProps> {}
 const RootNavigator: React.FC<RootNavigatorProps> = () => (
     <Stack.Navigator screenOptions={loginScreensOptions}>
         <Stack.Screen name={Routes.MAIN} component={MainScreen} options={MainScreenOptions} />
+        <Stack.Screen name={Routes.DETAILS} component={DetailsScreen} />
     </Stack.Navigator>
 );
 

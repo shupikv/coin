@@ -1,10 +1,14 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { SafeAreaView, FlatList, StyleSheet, Alert } from 'react-native';
+import { StackScreenProps } from '@react-navigation/stack';
 import { Coins } from '../../models';
+import { Routes, NavigatorParams } from '../../navigation';
 import fetchCoins from '../../api/fetchCoins';
 import CoinListItem from '../../components/CoinListItem';
 
-const MainScreen: React.FC = () => {
+type MainScreenProps = StackScreenProps<NavigatorParams, Routes.MAIN>;
+
+const MainScreen: React.FC<MainScreenProps> = ({ navigation }) => {
     const [coinItems, setCoinItems] = useState<Coins>([]);
 
     const getCoins = useCallback(async () => {
@@ -28,7 +32,17 @@ const MainScreen: React.FC = () => {
             <FlatList
                 testID="CoinsList"
                 data={coinItems}
-                renderItem={(item) => <CoinListItem data={item} />}
+                renderItem={(data) => (
+                    <CoinListItem
+                        data={data}
+                        onPress={() =>
+                            navigation.navigate(Routes.DETAILS, {
+                                itemId: data.item.id,
+                                title: data.item.symbol,
+                            })
+                        }
+                    />
+                )}
                 contentContainerStyle={styles.coinItemsList}
                 keyExtractor={(item) => item.id}
                 numColumns={1}
